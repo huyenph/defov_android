@@ -69,9 +69,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     def paging_version = "3.0.0"
-    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
     // alternatively - without Android dependencies for tests
-    testImplementation("androidx.paging:paging-common:$paging_version")
+    testImplementation("androidx.paging:paging-common-ktx:$paging_version")
 
     def lifecycle_version = "2.4.0-alpha02"
     def arch_version = "2.1.0"
