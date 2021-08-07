@@ -13,6 +13,15 @@ class NetworkResponseCall<S : Any, E : Any>(
     private val _delegate: Call<S>,
     private val _errorConverter: Converter<ResponseBody, E>
 ) : Call<NetworkResponse<S, E>> {
+
+    override fun isExecuted(): Boolean = _delegate.isExecuted
+
+    override fun cancel() = _delegate.cancel()
+
+    override fun isCanceled(): Boolean = _delegate.isCanceled
+
+    override fun request(): Request = _delegate.request()
+
     override fun enqueue(callback: Callback<NetworkResponse<S, E>>) =
         _delegate.enqueue(object : Callback<S> {
             override fun onResponse(call: Call<S>, response: Response<S>) {
@@ -28,7 +37,7 @@ class NetworkResponseCall<S : Any, E : Any>(
                     } else {
                         callback.onResponse(
                             this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnknownError(code, null))
+                            Response.success(NetworkResponse.UnknownError(code))
                         )
                     }
                 } else {
@@ -49,7 +58,7 @@ class NetworkResponseCall<S : Any, E : Any>(
                     } else {
                         callback.onResponse(
                             this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnknownError(code, null))
+                            Response.success(NetworkResponse.UnknownError(code))
                         )
                     }
                 }
@@ -73,12 +82,4 @@ class NetworkResponseCall<S : Any, E : Any>(
     override fun execute(): Response<NetworkResponse<S, E>> {
         throw UnsupportedOperationException("NetworkResponseCall doesn't support execute")
     }
-
-    override fun isExecuted(): Boolean = _delegate.isExecuted
-
-    override fun cancel() = _delegate.cancel()
-
-    override fun isCanceled(): Boolean = _delegate.isCanceled
-
-    override fun request(): Request = _delegate.request()
 }

@@ -18,5 +18,5 @@ sealed class NetworkResponse<out S : Any, out E : Any> {
      */
     data class NetworkError(val code: Int, val error: IOException) : NetworkResponse<Nothing, Nothing>()
 
-    data class UnknownError(val code: Int, val error: Throwable?) : NetworkResponse<Nothing, Nothing>()
+    data class UnknownError(val code: Int, val error: Throwable? = null) : NetworkResponse<Nothing, Nothing>()
 }
